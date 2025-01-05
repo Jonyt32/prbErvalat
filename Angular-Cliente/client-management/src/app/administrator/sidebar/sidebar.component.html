@@ -1,0 +1,13 @@
+<nav class="sidebar" [class.open]="isOpen">
+    <button class="close-sidebar" *ngIf="isOpen" (click)="closeSidebar.emit()">
+        <i class="fas fa-times"></i>
+    </button>
+    <ul>
+        <li>
+            <a routerLink="/clients" routerLinkActive="active" (click)="closeSidebar.emit()">Clients</a>
+        </li>
+        <li>
+            <a routerLink="/client-history" routerLinkActive="active" (click)="closeSidebar.emit()">Client Look History</a>
+        </li>
+    </ul>
+</nav>

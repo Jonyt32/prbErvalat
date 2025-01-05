@@ -1,0 +1,74 @@
+<div class="content-container">
+    <div class="action-bar">
+        <button class="btn btn-primary" (click)="openAddClientModal()">
+            <i class="fas fa-plus"></i> Add Client
+        </button>
+        <button class="btn btn-primary" (click)="exportData()">
+            <i class="fas fa-file-export"></i> Export CSV
+        </button>
+        <div class="search-bar">
+            <input type="text" placeholder="Search by Shared Key" class="form-control" [(ngModel)]="sharedKeyFilter" />
+            <button class="btn btn-primary" (click)="filterBySharedKey()">Search</button>
+            <button class="btn btn-primary" (click)="openAdvanceSearchModal()">Advanced Search</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Shared Key</th>
+                    <th>Business ID</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Date Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let client of clients">
+                    <td>{{ client.sharedKey }}</td>
+                    <td>{{ client.businessId }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.phone }}</td>
+                    <td>{{ client.dateAdded }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="clients.length === 0" class="text-center text-muted py-3">
+            No clients found.
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div class="modal-backdrop fade show" *ngIf="showAddClientModal || showAdvanceSearchModal" style="z-index: 1040;"></div>
+
+    <!-- Add Client Modal -->
+    <div class="modal fade show" tabindex="-1" role="dialog" *ngIf="showAddClientModal" style="z-index: 1050; display: block;">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Client</h5>
+                    <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <app-add-client (clientAdded)="loadClients()" (close)="closeModal()"></app-add-client>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Search Modal -->
+    <div class="modal fade show" tabindex="-1" role="dialog" *ngIf="showAdvanceSearchModal" style="z-index: 1050; display: block;">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Advanced Search</h5>
+                    <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <app-advance-search (searchResults)="clients = $event" (close)="closeModal()"></app-advance-search>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

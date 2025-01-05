@@ -1,0 +1,32 @@
+<div class="modal-container">
+    <div class="modal-header">
+        <h2>Add Client</h2>
+        <button type="button" class="close-btn" (click)="close.emit()">×</button>
+    </div>
+    <form (ngSubmit)="addClient()" class="form-container">
+        <div class="form-group">
+            <label for="sharedKey">Shared Key:</label>
+            <input id="sharedKey" type="text" class="form-control" [(ngModel)]="client.sharedKey" name="sharedKey" required placeholder="Enter Shared Key" />
+        </div>
+
+        <div class="form-group">
+            <label for="businessId">Business ID:</label>
+            <input id="businessId" type="text" class="form-control" [(ngModel)]="client.businessId" name="businessId" required placeholder="Enter Business ID" />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" type="email" class="form-control" [(ngModel)]="client.email" name="email" required placeholder="Enter Email" />
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input id="phone" type="text" class="form-control" [(ngModel)]="client.phone" name="phone" required placeholder="Enter Phone" />
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" (click)="close.emit()">Cancel</button>
+        </div>
+    </form>
+</div>

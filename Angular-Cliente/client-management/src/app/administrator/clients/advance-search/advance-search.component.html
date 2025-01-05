@@ -1,0 +1,37 @@
+<div class="modal-container">
+    <div class="modal-header">
+        <h2>Advanced Search</h2>
+        <button type="button" class="close-btn" (click)="close.emit()">×</button>
+    </div>
+    <form (ngSubmit)="search()" class="form-container">
+        <div class="form-group">
+            <label for="businessId">Business ID:</label>
+            <input id="businessId" type="text" class="form-control" [(ngModel)]="businessId" name="businessId" placeholder="Enter Business ID" />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Enter Email" />
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input id="phone" type="text" class="form-control" [(ngModel)]="phone" name="phone" placeholder="Enter Phone" />
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" name="startDate" />
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" name="endDate" />
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="button" class="btn btn-secondary" (click)="close.emit()">Cancel</button>
+        </div>
+    </form>
+</div>
