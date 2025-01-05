@@ -27,6 +27,8 @@ export class AddClientComponent {
   addClient() {
     this.clientService.createClient(this.client).subscribe(() => {
       this.clientAdded.emit(); // Informar que un cliente fue agregado
+      alert(`Cliente con el email: ${this.client.email} agregado`);
+      this.cancel();
     });
   }
 

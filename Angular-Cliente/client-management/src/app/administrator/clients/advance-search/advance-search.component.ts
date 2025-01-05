@@ -32,7 +32,14 @@ export class AdvanceSearchComponent {
         this.endDate || undefined
       )
       .subscribe((data) => {
-        this.searchResults.emit(data);
+        if(data){
+          this.searchResults.emit(data);
+        }
+        else{
+          alert("No se encontraron resultados");
+        }
+        
+        this.cancel();
       });
   }
   cancel() {
