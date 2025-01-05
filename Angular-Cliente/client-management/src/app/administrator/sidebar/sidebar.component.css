@@ -45,6 +45,11 @@
     transition: color 0.3s ease;
 }
 
+.close-sidebar {
+    display: none;
+    /* Oculta el botón de cerrar */
+}
+
 @media (min-width: 769px) {
     .sidebar {
         transform: translateX(-100%);
@@ -59,9 +64,5 @@
     .sidebar.open {
         transform: translateX(0);
         /* Visible cuando está abierto */
-    }
-    .close-sidebar {
-        display: block;
-        /* Mostrar botón de cerrar */
     }
 }
