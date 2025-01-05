@@ -3,34 +3,43 @@
         <h2>Advanced Search</h2>
         <button type="button" class="close-btn" (click)="close.emit()">×</button>
     </div>
-    <form (ngSubmit)="search()" class="form-container">
+    <form [formGroup]="searchForm" (ngSubmit)="search()" class="form-container">
         <div class="form-group">
             <label for="businessId">Business ID:</label>
-            <input id="businessId" type="text" class="form-control" [(ngModel)]="businessId" name="businessId" placeholder="Enter Business ID" />
+            <input id="businessId" type="text" class="form-control" formControlName="businessId" placeholder="Enter Business ID" />
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input id="email" type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Enter Email" />
+            <input id="email" type="email" class="form-control" formControlName="email" placeholder="Enter Email" />
+            <div *ngIf="searchForm.get('email')?.invalid && searchForm.get('email')?.touched" class="error">
+                <small *ngIf="searchForm.get('email')?.errors?.['email']">Formato de correo inválido.</small>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="phone">Phone:</label>
-            <input id="phone" type="text" class="form-control" [(ngModel)]="phone" name="phone" placeholder="Enter Phone" />
+            <input id="phone" type="text" class="form-control" formControlName="phone" placeholder="Enter Phone" />
         </div>
 
         <div class="form-group">
             <label for="startDate">Start Date:</label>
-            <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" name="startDate" />
+            <input id="startDate" type="date" class="form-control" formControlName="startDate" />
+            <div *ngIf="searchForm.get('startDate')?.hasError('startDateAfterEnd') && searchForm.get('startDate')?.touched" class="error">
+                Start Date no puede ser mayor End Date.
+            </div>
         </div>
 
         <div class="form-group">
             <label for="endDate">End Date:</label>
-            <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" name="endDate" />
+            <input id="endDate" type="date" class="form-control" formControlName="endDate" />
+            <div *ngIf="searchForm.get('endDate')?.hasError('endDateBeforeStart') && searchForm.get('endDate')?.touched" class="error">
+                End Date no puede ser menor Start Date.
+            </div>
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary" [disabled]="searchForm.invalid">Search</button>
             <button type="button" class="btn btn-secondary" (click)="close.emit()">Cancel</button>
         </div>
     </form>

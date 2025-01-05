@@ -3,29 +3,46 @@
         <h2>Add Client</h2>
         <button type="button" class="close-btn" (click)="close.emit()">×</button>
     </div>
-    <form (ngSubmit)="addClient()" class="form-container">
+    <form [formGroup]="clientForm" (ngSubmit)="addClient()" class="form-container">
         <div class="form-group">
             <label for="sharedKey">Shared Key:</label>
-            <input id="sharedKey" type="text" class="form-control" [(ngModel)]="client.sharedKey" name="sharedKey" required placeholder="Enter Shared Key" />
+            <input id="sharedKey" type="text" class="form-control" formControlName="sharedKey" name="sharedKey" required placeholder="Enter Shared Key" />
+            <div *ngIf="clientForm.get('sharedKey')?.invalid && clientForm.get('sharedKey')?.touched" class="text-danger">
+                <small *ngIf="clientForm.get('sharedKey')?.errors?.['required']"> SharedKey es obligatorio.</small>
+            </div>
         </div>
+
 
         <div class="form-group">
             <label for="businessId">Business ID:</label>
-            <input id="businessId" type="text" class="form-control" [(ngModel)]="client.businessId" name="businessId" required placeholder="Enter Business ID" />
+            <input id="businessId" type="text" class="form-control" formControlName="businessId" name="businessId" required placeholder="Enter Business ID" />
+            <div *ngIf="clientForm.get('businessId')?.invalid && clientForm.get('businessId')?.touched" class="text-danger">
+                <small *ngIf="clientForm.get('businessId')?.errors?.['required']"> BusinessId es obligatorio.</small>
+            </div>
         </div>
+
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input id="email" type="email" class="form-control" [(ngModel)]="client.email" name="email" required placeholder="Enter Email" />
+            <input id="email" type="email" class="form-control" formControlName="email" name="email" required placeholder="Enter Email" />
+            <div *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="text-danger">
+                <small *ngIf="clientForm.get('email')?.errors?.['required']">El correo es obligatorio.</small>
+                <small *ngIf="clientForm.get('email')?.errors?.['email']">Formato de correo inválido.</small>
+            </div>
         </div>
+
 
         <div class="form-group">
             <label for="phone">Phone:</label>
-            <input id="phone" type="text" class="form-control" [(ngModel)]="client.phone" name="phone" required placeholder="Enter Phone" />
+            <input id="phone" type="text" class="form-control" formControlName="phone" name="phone" required placeholder="Enter Phone" />
+            <div *ngIf="clientForm.get('phone')?.invalid && clientForm.get('phone')?.touched" class="text-danger">
+                <small *ngIf="clientForm.get('phone')?.errors?.['required']"> Phone es obligatorio.</small>
+            </div>
         </div>
 
+
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">Save</button>
             <button type="button" class="btn btn-secondary" (click)="close.emit()">Cancel</button>
         </div>
     </form>

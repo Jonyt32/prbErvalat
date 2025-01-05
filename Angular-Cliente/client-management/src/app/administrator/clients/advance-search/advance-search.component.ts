@@ -1,48 +1,76 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ClientService } from 'src/app/services/client.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { Client } from 'src/app/swagger/model/client';
-import { FormsModule } from '@angular/forms';
+import { ClientService } from 'src/app/services/client.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-advance-search',
   templateUrl: './advance-search.component.html',
   styleUrls: ['./advance-search.component.css'],
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
 })
 export class AdvanceSearchComponent {
   @Output() searchResults = new EventEmitter<Client[]>();
-  @Output() close = new EventEmitter<void>(); // Evento para cerrar el modal
+  @Output() close = new EventEmitter<void>();
 
-  businessId: string = '';
-  email: string = '';
-  phone: string = '';
-  startDate: string = '';
-  endDate: string = '';
+  searchForm: FormGroup;
 
-  constructor(private clientService: ClientService) {}
+  constructor(private fb: FormBuilder, private clientService: ClientService) {
+    this.searchForm = this.fb.group(
+      {
+        businessId: [''],
+        email: ['', [Validators.email]],
+        phone: [''],
+        startDate: [''],
+        endDate: [''],
+      },
+      { validators: [this.dateRangeValidator] } 
+    );
+  }
 
   search() {
-    this.clientService
-      .advancedSearch(
-        this.businessId || undefined,
-        this.email || undefined,
-        this.phone || undefined,
-        this.startDate || undefined,
-        this.endDate || undefined
-      )
-      .subscribe((data) => {
-        if(data){
-          this.searchResults.emit(data);
-        }
-        else{
-          alert("No se encontraron resultados");
-        }
-        
-        this.cancel();
-      });
+    if (this.searchForm.valid) {
+      const { businessId, email, phone, startDate, endDate } = this.searchForm.value;
+
+      this.clientService
+        .advancedSearch(
+          businessId || undefined,
+          email || undefined,
+          phone || undefined,
+          startDate || undefined,
+          endDate || undefined
+        )
+        .subscribe((data) => {
+          if (data && data.length > 0) {
+            this.searchResults.emit(data);
+          } else {
+            alert('No se encontraron resultados');
+          }
+          this.cancel();
+        });
+    }
   }
+
   cancel() {
     this.close.emit(); // Emitir evento para informar al componente padre que debe cerrar el modal
+  }
+
+  private dateRangeValidator(group: AbstractControl) {
+    const startDate = group.get('startDate')?.value;
+    const endDate = group.get('endDate')?.value;
+
+    if (startDate && endDate) {
+      if (new Date(startDate) > new Date(endDate)) {
+        group.get('startDate')?.setErrors({ startDateAfterEnd: true });
+        group.get('endDate')?.setErrors({ endDateBeforeStart: true });
+      } else {
+        group.get('startDate')?.setErrors(null);
+        group.get('endDate')?.setErrors(null);
+      }
+    }
+
+    return null;
   }
 }
