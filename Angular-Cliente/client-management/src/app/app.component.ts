@@ -11,7 +11,7 @@ import { SidebarComponent } from './administrator/sidebar/sidebar.component';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  sidebarOpen = window.innerWidth > 768
+  sidebarOpen = window.innerWidth > 768; // Por defecto abierto en pantallas grandes
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
@@ -25,10 +25,6 @@ export class AppComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    if (event.target.innerWidth > 768) {
-      this.sidebarOpen = true;
-    } else {
-      this.sidebarOpen = false;
-    }
+    this.sidebarOpen = event.target.innerWidth > 768;
   }
 }

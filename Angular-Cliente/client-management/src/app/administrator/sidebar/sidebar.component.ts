@@ -9,15 +9,17 @@ import { Component, EventEmitter, Input, Output, HostListener } from '@angular/c
   imports:[CommonModule]
 })
 export class SidebarComponent {
-  @Input() isOpen = false;
+  @Input() isOpen = false; // Controla si el sidebar está abierto
   @Output() closeSidebar = new EventEmitter<void>();
 
-  isSmallScreen = false;
+  isSmallScreen(): boolean {
+    return window.innerWidth <= 768;
+  }
 
-
-  closeSidebarOnSmallScreen() {
-    if (this.isSmallScreen) {
-      this.closeSidebar.emit();
+  @HostListener('window:resize')
+  onResize() {
+    if (!this.isSmallScreen()) {
+      this.isOpen = true; // Mantener visible en pantallas grandes
     }
   }
 }

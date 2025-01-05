@@ -1,5 +1,5 @@
 <nav class="sidebar" [class.open]="isOpen">
-    <button class="close-sidebar" *ngIf="isOpen" (click)="closeSidebar.emit()">
+    <button class="close-sidebar" *ngIf="isOpen && isSmallScreen()" (click)="closeSidebar.emit()">
         <i class="fas fa-times"></i>
     </button>
     <ul>
