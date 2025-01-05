@@ -55,7 +55,7 @@
         display: block;
     }
     .sidebar {
-        transform: translateX(0);
+        transform: translateX(-100%);
         /* Siempre visible en pantallas grandes */
     }
 }
