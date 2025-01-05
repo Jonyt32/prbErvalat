@@ -11,7 +11,7 @@ import { SidebarComponent } from './administrator/sidebar/sidebar.component';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  sidebarOpen = false;
+  sidebarOpen = window.innerWidth > 768
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;

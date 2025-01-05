@@ -2,13 +2,14 @@
     width: 250px;
     background-color: white;
     color: #007bff;
-    height: 100vh;
+    height: calc(100vh - 60px);
+    /* Altura de la pantalla menos la altura del header */
     position: fixed;
     left: 0;
-    top: 0;
+    top: 60px;
+    /* La misma altura que el header */
     transition: transform 0.3s ease;
     transform: translateX(-100%);
-    /* Oculto inicialmente */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
